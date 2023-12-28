@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="form-title">Registration Form</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-input-field-group">
+                {{ form.name.label(class="form-label")}}
+                {{ form.name(size=20) }}
+            </div>
+            <div class="form-input-field-group">
+                {{ form.lastname.label(class="form-label")}}
+                {{ form.lastname(size=20) }}
+            </div>
+            <div class="form-input-field-group">
+                {{ form.dob.label(class="form-label")}}
+                {{ form.dob() }}
+                <!-- Display errors - Not In The Future Error -->
+                {% for error in form.dob.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <p>{{ form.submit() }}</p>
+        </form>
+        {% if age_years is not none and age_days is not none %}
+            <p>You are {{ age_years }} years and {{ age_days }} days old.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

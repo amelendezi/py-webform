@@ -1,0 +1,62 @@
+body {
+    background-color: #b9b7ac;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 40%; /* Add this line */
+    min-width: 300px; /* Add this line to ensure the form doesn't get too small on narrow screens */
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-title {
+    font-size: 1.5em; /* Make the font size larger */
+    margin-bottom: 20px; /* Add some space below the title */
+}
+
+.form-input-field-group {
+    margin-bottom: 20px;
+}
+
+.form-label{
+    margin-bottom: 20px;
+}
