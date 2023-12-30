@@ -1,0 +1,81 @@
+{
+    "componentName": "Person",
+    "attributes": {
+        "name": {
+            "type": "text",            
+            "validators": [
+                {
+                    "name": "requiredValidator",                
+                    "value": true,
+                    "errorMessage": "Name is required"                    
+                },
+                {
+                    "name": "minLengthValidator",
+                    "errorMessage": "Name must be at least 3 characters long",
+                    "minLength": 3
+                },
+                {
+                    "name": "maxLengthValidator",
+                    "errorMessage": "Name must be at most 30 characters long",
+                    "maxLength": 30
+                },
+                {
+                    "name": "patternValidator",
+                    "errorMessage": "Name must contain only letters",
+                    "pattern": "^[a-zA-Z]+$"
+                }
+            ]
+        },
+        "lastname": {
+            "type": "text",        
+            "validators": [
+                {
+                    "name": "requiredValidator",
+                    "value": true,
+                    "errorMessage": "Name is required"
+                },
+                {
+                    "name": "minLengthValidator",
+                    "errorMessage": "Name must be at least 3 characters long",
+                    "minLength": 3
+                },
+                {
+                    "name": "maxLengthValidator",
+                    "errorMessage": "Name must be at most 30 characters long",
+                    "maxLength": 30
+                },
+                {
+                    "name": "patternValidator",
+                    "errorMessage": "Name must contain only letters",
+                    "pattern": "^[a-zA-Z]+$"
+                }
+            ]           
+        },
+        "dob": {
+            "type": "date",
+            "validators": [
+                {
+                    "name": "requiredValidator",
+                    "value": false,
+                    "errorMessage": "Dat of birth is required"
+                }
+            ]
+        },
+        "age_years": {
+            "type": "number",
+            "decimalPlaces": 0,
+            "calculation": {
+                "name": "numberOfYearsToCurrentYearCalculation",
+                "referenceDate": "dob"
+            }
+        },
+        "age_days": {
+            "type": "number",
+            "decimalPlaces": 0,
+            "calculation": {
+                "name": "numberOfDaysToCurrentDayCalculation",
+                "referenceDate": "dob"
+            }
+        }
+    }
+}

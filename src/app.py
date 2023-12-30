@@ -1,12 +1,9 @@
 import json
-import os
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField
 from wtforms.validators import DataRequired, Length
-from datetime import datetime
-from form_utilities import calculate_age
-from populate_data import populate_data
+from populate_data import populate, populate_calculation
 from flask import Flask
 from database import saveDataToDatabase
 
@@ -21,7 +18,7 @@ def create_app():
 
 app = create_app()
 
-class MyForm(FlaskForm):
+class PersonForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(max=MAX_INPUT_LENGTH)])
     lastname = StringField('Surname', validators=[DataRequired(), Length(max=MAX_INPUT_LENGTH)])
     dob = DateField('Date of Birth', format='%Y-%m-%d', validators=[DataRequired()])
@@ -29,29 +26,26 @@ class MyForm(FlaskForm):
         
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    form = MyForm()
-    age_years = age_days = None
+    
+    # Load table schema from JSON file
+    with open('./src/definitions/person.json', 'r') as f:
+        definition = json.load(f)
+                
+    form = PersonForm()
+    
+    data = {}
     if form.validate_on_submit():
+                    
+        # Populate Data                                     
+        data  = populate(form, definition)
         
-        # Calculated Fields
-        age_years, age_days = calculate_age(form.dob.data)
-        
-        # Save Data in JSON
-        data = populate_data(form, age_years, age_days)
-        
-        # Save Data in Database
-        saveDataToJSONFile(data)
+        #Populate Calculated Fields
+        populate_calculation(data, definition)
         
         # Save Data to Database
-        saveDataToDatabase(data)
+        saveDataToDatabase(data, definition)
                      
-    return render_template('index.html', form=form, age_years=age_years, age_days=age_days)
-
-def saveDataToJSONFile(data):
-    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
-    os.makedirs('data', exist_ok=True)
-    with open(f'data/data_{timestamp}.json', 'w') as f:
-        json.dump(data, f)    
+    return render_template('index.html', form=form, age_years=data.get('age_years'), age_days=data.get('age_days'))
 
 if __name__ == "__main__":
     with app.app_context():

@@ -1,0 +1,9 @@
+import datetime
+import json
+import os
+
+def writeDataToJsonFile(data):
+    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+    os.makedirs('data', exist_ok=True)
+    with open(f'data/data_{timestamp}.json', 'w') as f:
+        json.dump(data, f)
